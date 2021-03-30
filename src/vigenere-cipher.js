@@ -1,13 +1,11 @@
 const CustomError = require("../extensions/custom-error");
 
 class VigenereCipheringMachine {
+
   constructor(direct = true) {
     this.direction = direct;
   }
   encrypt(message, key) {  
-    //throw new CustomError('Not implemented');
-    // remove line with error and write your code here
-
     if (!message || !key) throw new Error('Please, give message and key');
     message = (message).toUpperCase();
     key = (key).toUpperCase();
@@ -28,7 +26,7 @@ class VigenereCipheringMachine {
         else i = 0
       } else arrEnc.push(symb);
     })
-    if (this.direct = false) {arrEnc.reverse()}
+    if (this.direction === false) {arrEnc.reverse()}
     return arrEnc.join('');
   } 
       
@@ -53,7 +51,7 @@ class VigenereCipheringMachine {
       else i = 0
     } else arr.push(symb);
   })
-  if (this.direct = false) {arr.reverse()}
+  if (this.direction === false) {arr.reverse()}
   return arr.join('');
   }
 }
