@@ -1,10 +1,9 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function getSeason(date) {
-  // remove line with error and write your code here
+  if (date == undefined) return ('Unable to determine the time of year!');
   if (
-    Object.prototype.toString.call(date) === "[object Date]" &&
-    date.getFullYear() >= 1970
+    Object.prototype.toString.call(date) === "[object Date]"
   ) {
     let rez;
     switch (date.getMonth()) {
@@ -33,6 +32,6 @@ module.exports = function getSeason(date) {
     }
     return rez;
   } else {
-    throw new CustomError("Not implemented");
+    throw new Error('Error');
   }
 };
