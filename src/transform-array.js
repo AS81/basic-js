@@ -1,32 +1,32 @@
 const CustomError = require("../extensions/custom-error");
 
-module.exports =  function transform(arr) {
-  throw new CustomError('Not implemented');
-  // remove line with error and write your code here
+module.exports = function transform(arr) {
   if (Array.isArray(arr)) {
     let rez = [];
+    let delNext = 0;
     arr.forEach((el, i) => {
-      switch (arr[i]) {
+      switch (arr[i]) {  
+        case "--discard-next":
+          if((i+1) in arr) delNext = 1;
+          break;
+        case "--double-next":
+          if((i+1) in arr) rez.push(arr[i+1]);
+          break; 
         case "--discard-prev":
-          rez.pop(rez.length - 1);
+          if(arr[i-2] != "--discard-next"){
+          rez.pop(rez.length - 1);}
           break;
         case "--double-prev":
-          if(!!rez[rez.length-1]) rez.push(rez[rez.length]);
-          break;
-        //case "--discard-next":
-        case "--double-next":
-          if(!!arr[i+1]) rez.push(arr[i+1]);
+          if((rez.length-1 in rez) && arr[i-2] != "--discard-next") rez.push(arr[i-1]);
           break;
         default:
-          rez.push(arr[i]);
+          if (delNext) {delNext = 0} else {rez.push(arr[i]); delNext = 0;}
           break;
       };
-      rez.forEach((el, i) => {
-        if (rez[i] == '--discard-next') rez.splice(i,2);
-      });
     });
     return rez;
-  } else {
-    throw new CustomError("is not array");
+  } else 
+  {
+    throw new Error("is not array");
   }
-  };
+}
